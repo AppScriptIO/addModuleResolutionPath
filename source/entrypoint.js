@@ -7,22 +7,40 @@ const   path = require('path'),
 // '${appRootPath}' allows for folders/modules inside the main folder to be called with out using relative paths.
 // '${appRootPath}/node_modules' allows for modules from upper herarchies to call modules from sibling folders. e.g. source/x calls source/y/node_modules/module
 function addModuleResolutionPath({
-    pathArray = [] // paths to add to the node module resolution paths
-} = {}) {
-    // add nodejs default path to NODE_PATH, i.e. "node_modules"
-    if(!process.env.NODE_PATH) process.env.NODE_PATH = `${jsEntrypointPath}/node_modules`
+    nodeModulePath // path to add to the node module resolution paths
+}) {
+    /* Adding the default node_modules path isn't necessary anymore, as the current behavior (at least through babel) is to load NODE_PATH as additional resolution paths, and not overriding.
+    add nodejs default path to NODE_PATH, i.e. "node_modules"  */
+    // if(!process.env.NODE_PATH) process.env.NODE_PATH = `${jsEntrypointPath}/node_modules`
+
     // add paths to the NODE_PATH string
-    for(let nodeModulePath of pathArray) {
-        process.env.NODE_PATH = `${process.env.NODE_PATH || ''}:${nodeModulePath}`
-        process.env.NODE_PATH = process.env.NODE_PATH.replace(/(^\:+)/, '') // ":<path>:<path>" -> "<path>:<path>" remove empty section in the beginning in case NODE_PATH was undefined.
-    }
-    
-    let nodePathArray = process.env.NODE_PATH.split(':') // default NODE_PATH is composed of paths separated by semicolon (one complete string of paths).
-    let nodePathFormatted = '\t'.concat(nodePathArray.join('\n\t')) // add a tab and linebreak between paths
-    console.log(`\x1b[2m\x1b[3m%s \n%s\x1b[0m'`, `• Node\'s module resolution paths:`, `${nodePathFormatted}`)
+    process.env.NODE_PATH = `${process.env.NODE_PATH || ''}:${nodeModulePath}`
+    process.env.NODE_PATH = process.env.NODE_PATH.replace(/(^\:+)/, '') // ":<path>:<path>" -> "<path>:<path>" remove empty section in the beginning in case NODE_PATH was undefined.
+
+    // Load new NODE_PATH variable
     moduleSystem._initPaths() // reflect change on the running app.
 }
 
+// interface for multiple paths
+function addModuleResolutionPathMultiple({
+    pathArray = [] 
+}) {
+
+    for(let nodeModulePath of pathArray) {
+        addModuleResolutionPath({ nodeModulePath })
+    }
+
+    // Log paths
+    let nodePathArray = process.env.NODE_PATH.split(':') // default NODE_PATH is composed of paths separated by semicolon (one complete string of paths).
+    let nodePathFormatted = '\t'.concat(nodePathArray.join('\n\t')); // add a tab and linebreak between paths
+    console.group(`\x1b[2m\x1b[3m%s \n%s\x1b[0m`, `• Node\'s module resolution paths:`, `${nodePathFormatted}`)  
+    console.groupEnd()
+}
+
+// logging wrapper 
+// TODO: Log inside proxy. 
+
 module.exports = {
-    addModuleResolutionPath
+    addModuleResolutionPath,
+    addModuleResolutionPathMultiple
 }
