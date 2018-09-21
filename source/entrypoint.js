@@ -14,8 +14,8 @@ function addModuleResolutionPath({
     // if(!process.env.NODE_PATH) process.env.NODE_PATH = `${jsEntrypointPath}/node_modules`
 
     // add paths to the NODE_PATH string
-    process.env.NODE_PATH = `${process.env.NODE_PATH || ''}:${nodeModulePath}`
-    process.env.NODE_PATH = process.env.NODE_PATH.replace(/(^\:+)/, '') // ":<path>:<path>" -> "<path>:<path>" remove empty section in the beginning in case NODE_PATH was undefined.
+    process.env.NODE_PATH = `${process.env.NODE_PATH || ''}${path.delimiter}${nodeModulePath}`
+    process.env.NODE_PATH = process.env.NODE_PATH.replace(new RegExp(`/(^\\${path.delimiter}+)/`), '') // ":<path>:<path>" -> "<path>:<path>" remove empty section in the beginning in case NODE_PATH was undefined.
 
     // Load new NODE_PATH variable
     moduleSystem._initPaths() // reflect change on the running app.
@@ -31,7 +31,7 @@ function addModuleResolutionPathMultiple({
     }
 
     // Log paths
-    let nodePathArray = process.env.NODE_PATH.split(':') // default NODE_PATH is composed of paths separated by semicolon (one complete string of paths).
+    let nodePathArray = process.env.NODE_PATH.split(path.delimiter) // default NODE_PATH is composed of paths separated by semicolon (one complete string of paths).
     let nodePathFormatted = '\t'.concat(nodePathArray.join('\n\t')); // add a tab and linebreak between paths
     console.group(`\x1b[2m\x1b[3m%s \n%s\x1b[0m`, `• Node\'s module resolution paths:`, `${nodePathFormatted}`)  
     console.groupEnd()
