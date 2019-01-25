@@ -33,8 +33,8 @@ function addModuleResolutionPathMultiple({
     // Log paths
     let nodePathArray = process.env.NODE_PATH.split(path.delimiter) // default NODE_PATH is composed of paths separated by semicolon (one complete string of paths).
     let nodePathFormatted = '\t'.concat(nodePathArray.join('\n\t')); // add a tab and linebreak between paths
-    console.group(`\x1b[2m\x1b[3m%s \n%s\x1b[0m`, `• Node\'s module resolution paths:`, `${nodePathFormatted}`)  
-    console.groupEnd()
+    // console.group(`\x1b[2m\x1b[3m%s \n%s\x1b[0m`, `• Node\'s module resolution paths:`, `${nodePathFormatted}`)  
+    // console.groupEnd()
 }
 
 // logging wrapper 
