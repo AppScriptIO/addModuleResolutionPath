@@ -1,1 +1,1 @@
-addModuleResolutionPath
+./documentation/information.md
