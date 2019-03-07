@@ -810,9 +810,9 @@
     "@dependency/installNodeJSModule" "https://github.com/AppScriptIO/installNodeJSModule"
     "@dependency/listDirectoryContent" "https://github.com/AppScriptIO/listDirectoryContent"
 
-"@dependency/scriptManager@https://github.com/AppScriptIO/scriptManager":
+"@dependency/scriptManager@https://github.com/AppScriptIO/scriptManager#semver:2.0.1":
   version "1.0.0"
-  resolved "https://github.com/AppScriptIO/scriptManager#517f6f432a471275851bcbd1669f0202ecc8ffab"
+  resolved "https://github.com/AppScriptIO/scriptManager#af14dc86e8b45b8202b5eee9e6f87682ad143ef1"
   dependencies:
     "@dependency/JSModuleTypeCheck" "https://github.com/AppScriptIO/JSModuleTypeCheck"
     "@dependency/addModuleResolutionPath" "https://github.com/AppScriptIO/addModuleResolutionPath"
