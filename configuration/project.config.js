@@ -18,7 +18,7 @@ const ownConfig = {
     },
   },
   get script() {
-    return [...script, ...[{ type: 'directory', path: ownConfig.directory.script }]]
+    return [...script, ...[{ type: 'directory', path: ownConfig.directory.script }, { type: 'directory', path: path.join(ownConfig.directory.root, 'node_modules') }]]
   },
   entrypoint: {
     programmaticAPI: './script.js',
@@ -32,9 +32,7 @@ const ownConfig = {
   },
   build: {
     get compile() {
-      return [
-        path.relative(ownConfig.directory.root, ownConfig.directory.source),
-      ]
+      return [path.relative(ownConfig.directory.root, ownConfig.directory.source)]
     },
     repositoryURL: 'https://github.com/AppScriptIO/addModuleResolutionPath',
   },
