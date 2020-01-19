@@ -1,7 +1,7 @@
 {
 	"name": "@dependency/addModuleResolutionPath",
 	"main": "./entrypoint/programmaticAPI",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"scripts": {
 		"build": "yarn run scriptManager shouldCompileScript=true @dependency/deploymentScript \".buildSourceCode.moduleProject({}, {compile:[/**'./test'*/]})\"",
 		"buildAndRelease": "yarn run scriptManager shouldCompileScript=true @dependency/deploymentScript \".buildAndRelease.moduleProject({})\""
