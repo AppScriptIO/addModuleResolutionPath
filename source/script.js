@@ -1,8 +1,7 @@
 const path = require('path'),
   moduleSystem = require('module')
 const jsEntrypointPath = path.dirname(
-  require.main.filename 
-  || process.cwd() /*In case run through commandline - e.g. 'node --eval "require(process.cwd())()"' where no main entry module is registered */
+  require.main?.filename || process.cwd() /*In case run through commandline - e.g. 'node --eval "require(process.cwd())()"' where no main entry module is registered */,
 ) // entrypoint directory path (current nodejs process root path)
 
 // add root path (app base path) to the resolved module paths.
