@@ -1,6 +1,9 @@
 const path = require('path'),
-  moduleSystem = require('module'),
-  jsEntrypointPath = path.dirname(require.main.filename) // entrypoint directory path (current nodejs process root path)
+  moduleSystem = require('module')
+const jsEntrypointPath = path.dirname(
+  require.main.filename 
+  || process.cwd() /*In case run through commandline - e.g. 'node --eval "require(process.cwd())()"' where no main entry module is registered */
+) // entrypoint directory path (current nodejs process root path)
 
 // add root path (app base path) to the resolved module paths.
 // Define server base path. Hackish way to make sure the path is always consistent. Base path in Nodejs is where the closest parent node_modules is located to the initiated js script.
